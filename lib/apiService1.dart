@@ -8,7 +8,7 @@ class FootballApiService {
   Future<List<Fixture>> getFixtures() async {
     final headers = {
       'x-rapidapi-host': "v3.football.api-sports.io",
-      'x-rapidapi-key': "1178746b386af74c9ef389ebe2735546"
+      'x-rapidapi-key': ""
     };
 
     final response = await _dio.get(
