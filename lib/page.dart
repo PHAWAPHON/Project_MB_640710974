@@ -1,8 +1,8 @@
-
 import 'package:flutter/material.dart';
 
 import 'package:football/matches.dart';
 import 'package:football/score.dart';
+import 'package:football/cardPlayer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
     FixturesTable(),
     Text('Table'),
     StandingsTable(),
-    Text('ควยๆๆๆๆๆๆๆๆๆ',style: TextStyle(fontSize: 70,color: Colors.black),),
+    Players(),
   ];
 
   void _onItemTapped(int index) {
@@ -33,10 +33,9 @@ class _HomePageState extends State<HomePage> {
         onItemSelected: _onItemTapped,
       ),
       appBar: AppBar(
-        title: Text('Football App', style: TextStyle(color: Colors.white)),
-        iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor: Color.fromARGB(240, 0, 0, 0)
-      ),
+          title: Text('Football App', style: TextStyle(color: Colors.white)),
+          iconTheme: IconThemeData(color: Colors.white),
+          backgroundColor: Color.fromARGB(240, 0, 0, 0)),
       body: _pages[_selectedIndex],
     );
   }
