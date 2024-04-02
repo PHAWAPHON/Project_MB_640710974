@@ -4,15 +4,15 @@ import 'package:football/model/standing.dart';
 
 class FootballApiService {
   final Dio _dio = Dio();
-
-  Future<List<Fixture>> getFixtures() async {
-    final headers = {
+ final headers = {
       'x-rapidapi-host': "v3.football.api-sports.io",
       'x-rapidapi-key': ""
     };
+  Future<List<Fixture>> getFixtures(int leagueNumber) async {
+   
 
     final response = await _dio.get(
-      "https://v3.football.api-sports.io/fixtures?season=2022&league=39",
+      "https://v3.football.api-sports.io/fixtures?season=2023&league=$leagueNumber",
       options: Options(headers: headers),
     );
 
@@ -24,22 +24,19 @@ class FootballApiService {
     }
   }
 
-  Future<LeagueStandings> getStandings() async {
-    final headers = {
-      'x-rapidapi-host': "v3.football.api-sports.io",
-      'x-rapidapi-key': ""
-    };
+  Future<LeagueStandings> getStandings(int leagueNumber) async {
 
-    final response = await _dio.get(
-      "https://v3.football.api-sports.io/standings?season=2022&league=39",
-      options: Options(headers: headers),
-    );
+  final response = await _dio.get(
+    "https://v3.football.api-sports.io/standings?season=2023&league=$leagueNumber",
+    options: Options(headers: headers),
+  );
 
-    if (response.statusCode == 200) {
-      StandingsResponse standingsResponse = StandingsResponse.fromJson(response.data);
-      return standingsResponse.league;
-    } else {
-      throw Exception("Error fetching standings: ${response.statusCode}");
-    }
+  if (response.statusCode == 200) {
+    StandingsResponse standingsResponse = StandingsResponse.fromJson(response.data);
+    return standingsResponse.league;
+  } else {
+    throw Exception("Error fetching standings: ${response.statusCode}");
   }
+}
+
 }

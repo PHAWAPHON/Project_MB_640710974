@@ -1,157 +1,111 @@
+
 import 'package:flutter/material.dart';
-//import 'package:football/model/fixture.dart';
-//import 'package:football/apiService1.dart';
+
 import 'package:football/matches.dart';
 import 'package:football/score.dart';
 
-var kBottomBarBackgroundColor = Colors.purple[800];
-var kBottomBarForegroundActiveColor = Colors.white;
-var kBottomBarForegroundInactiveColor = Colors.white60;
-var kSplashColor = Colors.purple[600];
-
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
-  final PageController _pageController = PageController();
+  final List<Widget> _pages = [
+    FixturesTable(),
+    Text('Table'),
+    StandingsTable(),
+    Text('ควยๆๆๆๆๆๆๆๆๆ',style: TextStyle(fontSize: 70,color: Colors.black),),
+  ];
 
-  void _handleClickButton(int index) {
+  void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-      _pageController.animateToPage(
-        index,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
     });
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavigationDrawerWidget(
+        onItemSelected: _onItemTapped,
+      ),
       appBar: AppBar(
-        title: const Text(
-          'Football App',
-          style: TextStyle(
-              color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: kBottomBarBackgroundColor,
+        title: Text('Football App', style: TextStyle(color: Colors.white)),
+        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: Color.fromARGB(240, 0, 0, 0)
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: kBottomBarBackgroundColor,
-        onPressed: () => _handleClickButton(0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: const [
-            Icon(Icons.live_tv, color: Colors.white),
-            SizedBox(height: 5),
-            Text(
-              'Matches',
-              style: TextStyle(color: Colors.white),
-            ),
-          ],
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomAppBar(
-        height: 64.0,
-        padding: EdgeInsets.zero,
-        color: kBottomBarBackgroundColor,
-        shape: const CircularNotchedRectangle(),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Expanded(
-              child: AppBottomMenuItem(
-                iconData: Icons.list_alt,
-                text: 'Scoreboard',
-                isSelected: _selectedIndex == 1,
-                onClick: () => _handleClickButton(1), 
-              ),
-            ),
-            const SizedBox(width: 100.0),
-            Expanded(
-              child: AppBottomMenuItem(
-                iconData: Icons.person,
-                text: 'Top Score',
-                isSelected: _selectedIndex == 2,
-                onClick: () {}, 
-              ),
-            ),
-          ],
-        ),
-      ),
-      body: PageView(
-        controller: _pageController,
-        onPageChanged: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-        children:  [
-          FixturesTable(),
-          StandingsTable(), 
-        ],
-      ),
+      body: _pages[_selectedIndex],
     );
   }
 }
 
+class NavigationDrawerWidget extends StatelessWidget {
+  final Function(int) onItemSelected;
+  final padding = EdgeInsets.symmetric(horizontal: 20);
 
-class AppBottomMenuItem extends StatelessWidget {
-  AppBottomMenuItem({
-    super.key,
-    required this.iconData,
-    required this.text,
-    required this.isSelected,
-    required this.onClick,
-  });
-
-  final IconData iconData;
-  final String text;
-  final bool isSelected;
-  final VoidCallback onClick;
+  NavigationDrawerWidget({required this.onItemSelected});
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
-    var color = isSelected
-        ? kBottomBarForegroundActiveColor
-        : kBottomBarForegroundInactiveColor;
-
-    return ClipOval(
+    return Drawer(
       child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: onClick,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Icon(iconData, color: color),
-              SizedBox(height: 4.0),
-              Text(
-                text,
-                textAlign: TextAlign.center,
-                style: theme.textTheme.labelMedium!.copyWith(
-                  color: color,
-                ),
+        color: Color.fromARGB(255, 28, 17, 17),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 30),
+          child: ListView(
+            children: <Widget>[
+              buildMenuItem(
+                text: 'Overview',
+                icon: Icons.dashboard,
+                onClicked: () => onItemSelected(0),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              buildMenuItem(
+                text: 'Matches',
+                icon: Icons.sports_soccer,
+                onClicked: () => onItemSelected(1),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              buildMenuItem(
+                text: 'Table',
+                icon: Icons.table_chart,
+                onClicked: () => onItemSelected(2),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              buildMenuItem(
+                text: 'News',
+                icon: Icons.newspaper,
+                onClicked: () => onItemSelected(3),
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget buildMenuItem({
+    required String text,
+    required IconData icon,
+    VoidCallback? onClicked,
+  }) {
+    final color = Colors.white;
+    final hoverColor = Colors.pink;
+
+    return ListTile(
+      leading: Icon(icon, color: color),
+      title: Text(text, style: TextStyle(color: color)),
+      hoverColor: hoverColor,
+      onTap: onClicked,
     );
   }
 }
