@@ -73,9 +73,9 @@ class FootballApiService {
     }
   }
 
-  Future<List<TopScorer>> getTopScorers(int leagueNumber) async {
+  Future<List<TopScorer>> getTop(String tops ,int leagueNumber) async {
     final response = await _dio.get(
-      "https://v3.football.api-sports.io/players/topscorers?season=2023&league=$leagueNumber",
+      "https://v3.football.api-sports.io/players/$tops?season=2023&league=$leagueNumber",
       options: Options(headers: headers),
     );
 

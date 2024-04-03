@@ -27,7 +27,6 @@ class _StandingsTableState extends State<StandingsTable> {
         preferredSize: Size.fromHeight(80),
         child: CustomTabBar(
           items: ['Premier League', 'Laliga', 'Bundesliga', 'Serie A', 'Ligue 1'],
-          icons: [Icons.home, Icons.settings, Icons.abc, Icons.abc, Icons.abc],
           onTabChanged: (index) {
             setState(() {
               currentTabIndex = index;

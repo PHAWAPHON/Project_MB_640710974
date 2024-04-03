@@ -18,6 +18,7 @@ class _HomePageState extends State<HomePage> {
     Text('Table'),
     StandingsTable(),
     Players(),
+    Text('Top Assists'),
   ];
 
   void _onItemTapped(int index) {
@@ -73,7 +74,7 @@ class NavigationDrawerWidget extends StatelessWidget {
                 height: 10,
               ),
               buildMenuItem(
-                text: 'Table',
+                text: 'Scoreboard',
                 icon: Icons.table_chart,
                 onClicked: () => onItemSelected(2),
               ),
@@ -81,9 +82,17 @@ class NavigationDrawerWidget extends StatelessWidget {
                 height: 10,
               ),
               buildMenuItem(
-                text: 'News',
+                text: 'Top Scorers',
                 icon: Icons.newspaper,
                 onClicked: () => onItemSelected(3),
+              ),
+               SizedBox(
+                height: 10,
+              ),
+              buildMenuItem(
+                text: 'Top Assists',
+                icon: Icons.newspaper,
+                onClicked: () => onItemSelected(4),
               ),
             ],
           ),

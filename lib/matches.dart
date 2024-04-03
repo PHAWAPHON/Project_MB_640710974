@@ -36,7 +36,7 @@ class _FixturesTableState extends State<FixturesTable> {
             'Serie A',
             'Ligue 1'
           ],
-          icons: [Icons.home, Icons.settings, Icons.abc, Icons.abc, Icons.abc],
+    
           onTabChanged: (index) {
             setState(() {
               currentTabIndex = index;

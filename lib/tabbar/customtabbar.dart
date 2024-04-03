@@ -3,13 +3,12 @@ import 'package:google_fonts/google_fonts.dart';
 
 class CustomTabBar extends StatefulWidget {
   final List<String> items;
-  final List<IconData> icons;
+
   final Function(int) onTabChanged;
 
   const CustomTabBar({
     Key? key,
     required this.items,
-    required this.icons,
     required this.onTabChanged,
   }) : super(key: key);
 
@@ -22,15 +21,15 @@ class _CustomTabBarState extends State<CustomTabBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-
+    return Container( // Wrap the ListView in a Container with a specified height
+      height: 50, // Give a specific height to the tab bar
       child: ListView.builder(
         physics: const BouncingScrollPhysics(),
         itemCount: widget.items.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (ctx, index) {
           return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               GestureDetector(
                 onTap: () {
@@ -53,19 +52,14 @@ class _CustomTabBarState extends State<CustomTabBar> {
                     ),
                   ),
                   child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          widget.items[index],
-                          style: GoogleFonts.ubuntu(
-                            fontWeight: FontWeight.w500,
-                            color: current == index
-                                ? Colors.white
-                                : Colors.pink,
-                          ),
-                        ),
-                      ],
+                    child: Text(
+                      widget.items[index],
+                      style: GoogleFonts.ubuntu(
+                        fontWeight: FontWeight.w500,
+                        color: current == index
+                            ? Colors.white
+                            : Colors.pink,
+                      ),
                     ),
                   ),
                 ),
