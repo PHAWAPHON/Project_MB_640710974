@@ -221,7 +221,7 @@ void _showStatsDialog(BuildContext context, Fixture fixture) {
                   'Match Statistics',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: Colors.white, // Set text color to white
+                    color: Colors.white,
                   ),
                 ),
                 SizedBox(height: 16.0),
@@ -240,7 +240,7 @@ void _showStatsDialog(BuildContext context, Fixture fixture) {
                           child: CircularProgressIndicator());
                     } else if (snapshot.hasError) {
                       return Text('Error: ${snapshot.error}',
-                          style: TextStyle(color: Colors.red)); // Set error text color to red
+                          style: TextStyle(color: Colors.red)); 
                     } else if (snapshot.hasData && snapshot.data!.length == 2) {
                       var homeStats = snapshot.data![0];
                       var awayStats = snapshot.data![1];

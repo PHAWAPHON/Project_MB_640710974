@@ -15,10 +15,8 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   final List<Widget> _pages = [
     FixturesTable(),
-    Text('Table'),
     StandingsTable(),
     Players(),
-    Text('Top Assists'),
   ];
 
   void _onItemTapped(int index) {
@@ -44,7 +42,10 @@ class _HomePageState extends State<HomePage> {
 
 class NavigationDrawerWidget extends StatelessWidget {
   final Function(int) onItemSelected;
-  final padding = EdgeInsets.symmetric(horizontal: 20);
+  final EdgeInsets padding = EdgeInsets.symmetric(horizontal: 15);
+
+  final String userName = "แอนโทนี่";
+  final String userEmail = "เดอะหมุน@หมุนแล้วยิง.com";
 
   NavigationDrawerWidget({required this.onItemSelected});
 
@@ -53,49 +54,67 @@ class NavigationDrawerWidget extends StatelessWidget {
     return Drawer(
       child: Material(
         color: Color.fromARGB(255, 28, 17, 17),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 30),
-          child: ListView(
-            children: <Widget>[
-              buildMenuItem(
-                text: 'Overview',
-                icon: Icons.dashboard,
-                onClicked: () => onItemSelected(0),
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              flex: 2,
+              child: DrawerHeader(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('anthony.png'),
+                    fit: BoxFit.fill,
+                    colorFilter: ColorFilter.mode(
+                      Colors.black.withOpacity(0.8),
+                      BlendMode.dstATop,
+                    ),
+                  ),
+                ),
+                child: null,
               ),
-              SizedBox(
-                height: 10,
+            ),
+            Expanded(
+              child: ListView(
+                padding: EdgeInsets.all(10),
+                children: [
+                  SizedBox(height: 10),
+                  Text(
+                    userName,
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    userEmail,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.white.withOpacity(0.7),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  buildMenuItem(
+                    text: 'Matches',
+                    icon: Icons.dashboard,
+                    onClicked: () => onItemSelected(0),
+                  ),
+                  SizedBox(height: 10),
+                  buildMenuItem(
+                    text: 'Scoreboard',
+                    icon: Icons.sports_soccer,
+                    onClicked: () => onItemSelected(1),
+                  ),
+                  SizedBox(height: 10),
+                  buildMenuItem(
+                    text: 'Player Stats',
+                    icon: Icons.table_chart,
+                    onClicked: () => onItemSelected(2),
+                  ),
+                ],
               ),
-              buildMenuItem(
-                text: 'Matches',
-                icon: Icons.sports_soccer,
-                onClicked: () => onItemSelected(1),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              buildMenuItem(
-                text: 'Scoreboard',
-                icon: Icons.table_chart,
-                onClicked: () => onItemSelected(2),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              buildMenuItem(
-                text: 'Top Scorers',
-                icon: Icons.newspaper,
-                onClicked: () => onItemSelected(3),
-              ),
-               SizedBox(
-                height: 10,
-              ),
-              buildMenuItem(
-                text: 'Top Assists',
-                icon: Icons.newspaper,
-                onClicked: () => onItemSelected(4),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

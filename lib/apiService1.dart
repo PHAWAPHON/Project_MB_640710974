@@ -8,7 +8,7 @@ class FootballApiService {
   final Dio _dio = Dio();
   final headers = {
     'x-rapidapi-host': "v3.football.api-sports.io",
-    'x-rapidapi-key': ""
+    'x-rapidapi-key': "1178746b386af74c9ef389ebe2735546"
   };
   Future<List<Fixture>> getFixtures(int leagueNumber) async {
     final response = await _dio.get(
@@ -50,8 +50,6 @@ class FootballApiService {
         options: Options(headers: headers),
       );
 
-//print('API Response: ${response.data}');
-
       if (response.statusCode == 200) {
         List<dynamic> fixturesJson = response.data['response'];
         if (fixturesJson.isNotEmpty) {
@@ -73,7 +71,7 @@ class FootballApiService {
     }
   }
 
-  Future<List<TopScorer>> getTop(String tops ,int leagueNumber) async {
+  Future<List<TopScorer>> getTop(String tops, int leagueNumber) async {
     final response = await _dio.get(
       "https://v3.football.api-sports.io/players/$tops?season=2023&league=$leagueNumber",
       options: Options(headers: headers),

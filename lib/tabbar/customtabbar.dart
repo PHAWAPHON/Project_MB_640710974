@@ -21,8 +21,8 @@ class _CustomTabBarState extends State<CustomTabBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Container( // Wrap the ListView in a Container with a specified height
-      height: 50, // Give a specific height to the tab bar
+    return Container( 
+      height: 50, 
       child: ListView.builder(
         physics: const BouncingScrollPhysics(),
         itemCount: widget.items.length,

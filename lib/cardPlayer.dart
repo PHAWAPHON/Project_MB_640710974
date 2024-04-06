@@ -144,7 +144,7 @@ class _PlayersState extends State<Players> {
                         child: Text(
                           currentTop == "topscorers"
                               ? 'Score: ${topScorer.statistics.first.goals.total}'
-                              : 'Assists: ${topScorer.statistics.first.goals.assists}', 
+                              : 'Assists: ${topScorer.statistics.first.goals.assists}',
                           style: GoogleFonts.lato(
                             fontSize: 20,
                             color: Colors.pink[900],
@@ -159,6 +159,89 @@ class _PlayersState extends State<Players> {
             },
           );
         }).toList(),
+      ),
+    );
+  }
+
+  void showPlayerDetails(TopScorer player) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor:
+          Colors.transparent, // Ensure no extra background is applied
+      builder: (BuildContext context) {
+        return Container(
+          padding: EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: Color.fromRGBO(37, 34, 34, 1.0),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(25),
+              topRight: Radius.circular(25),
+            ),
+          ),
+          child: SingleChildScrollView(
+            // Use SingleChildScrollView for a long content
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Center(
+                  child: ClipOval(
+                    child: Image.network(
+                      player.player.photo,
+                      width: 120,
+                      height: 120,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                Text(
+                  player.player.name,
+                  style: GoogleFonts.lato(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                  textAlign: TextAlign.center,
+                ),
+                Divider(color: Colors.grey),
+                InfoText('Team:', player.statistics.first.team.name),
+                InfoText('Age:', player.player.age.toString()),
+                InfoText('Nationality:', player.player.nationality),
+                InfoText('Height:', player.player.height),
+                InfoText('Weight:', player.player.weight),
+                InfoText('Position:', player.statistics.first.games.position),
+                InfoText('Appearances:',
+                    player.statistics.first.games.appearances.toString()),
+                InfoText(
+                    'Goals:', player.statistics.first.goals.total.toString()),
+                InfoText('Assists:',
+                    player.statistics.first.goals.assists.toString()),
+                InfoText('Yellow Cards:',
+                    player.statistics.first.cards.yellow.toString()),
+                InfoText(
+                    'Red Cards:', player.statistics.first.cards.red.toString()),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget InfoText(String title, String value) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        children: [
+          Text('$title ',
+              style: GoogleFonts.lato(
+                  fontSize: 18,
+                  color: Colors.white70,
+                  fontWeight: FontWeight.bold)),
+          Expanded(
+            child: Text(value,
+                style: GoogleFonts.lato(fontSize: 18, color: Colors.white),
+                overflow: TextOverflow.ellipsis),
+          ),
+        ],
       ),
     );
   }
@@ -190,11 +273,19 @@ class _PlayersState extends State<Players> {
           ),
         ],
       ),
+      // Inside your Scaffold
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
         unselectedItemColor: Colors.purple,
         selectedItemColor: Colors.pink,
-        currentIndex: _bottomIndex, 
+        currentIndex: _bottomIndex,
+        selectedLabelStyle: TextStyle(
+          fontSize: 16, 
+          fontWeight: FontWeight.bold,
+        ),
+        unselectedLabelStyle: TextStyle(
+          fontSize: 12, 
+        ),
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.trending_up),
@@ -213,10 +304,15 @@ class _PlayersState extends State<Players> {
           });
         },
       ),
+
       floatingActionButton: _selectedIndex != null
           ? FloatingActionButton(
-              onPressed: () {},
-              child: Icon(
+              onPressed: () {
+                if (_selectedIndex != null) {
+                  showPlayerDetails(_selectedIndex!);
+                }
+              },
+              child: const Icon(
                 Icons.arrow_forward_ios,
                 color: Colors.white,
               ),

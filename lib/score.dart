@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:football/apiService1.dart';
 import 'package:football/model/standing.dart';
 import '../tabbar/customtabbar.dart';
@@ -11,12 +12,12 @@ class StandingsTable extends StatefulWidget {
 class _StandingsTableState extends State<StandingsTable> {
   late Future<LeagueStandings> _standingsFuture;
   int currentTabIndex = 0;
-  final List<int> leagueNumbers = [39, 140, 78, 135, 61]; 
+  final List<int> leagueNumbers = [39, 140, 78, 135, 61];
 
   @override
   void initState() {
     super.initState();
-    _standingsFuture = FootballApiService().getStandings(leagueNumbers[0]); 
+    _standingsFuture = FootballApiService().getStandings(leagueNumbers[0]);
   }
 
   @override
@@ -26,11 +27,18 @@ class _StandingsTableState extends State<StandingsTable> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(80),
         child: CustomTabBar(
-          items: ['Premier League', 'Laliga', 'Bundesliga', 'Serie A', 'Ligue 1'],
+          items: [
+            'Premier League',
+            'Laliga',
+            'Bundesliga',
+            'Serie A',
+            'Ligue 1'
+          ],
           onTabChanged: (index) {
             setState(() {
               currentTabIndex = index;
-              _standingsFuture = FootballApiService().getStandings(leagueNumbers[index]); 
+              _standingsFuture =
+                  FootballApiService().getStandings(leagueNumbers[index]);
             });
           },
         ),
@@ -103,7 +111,10 @@ class _StandingsTableState extends State<StandingsTable> {
       DataColumn(label: Text('#')),
       DataColumn(label: Text('TEAM')),
       DataColumn(label: Text('P'), numeric: true),
-      DataColumn(label: Text('GD'), numeric: true),
+      DataColumn(label: Text('W'), numeric: true), // Wins
+      DataColumn(label: Text('D'), numeric: true), // Draws
+      DataColumn(label: Text('L'), numeric: true), // Losses
+      DataColumn(label: Text('GD'), numeric: true), // Goal Difference
       DataColumn(label: Text('PTS'), numeric: true),
     ];
   }
@@ -112,34 +123,27 @@ class _StandingsTableState extends State<StandingsTable> {
     return standings.map((teamStanding) {
       return DataRow(
         cells: [
-          DataCell(Text(
-            '${teamStanding.rank}',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          )),
-          DataCell(
-            Row(
-              children: [
-                Image.network(teamStanding.team.logo, width: 40, height: 40),
-                SizedBox(width: 10),
-                Text(
-                  teamStanding.team.name,
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          ),
-          DataCell(Text(
-            '${teamStanding.all.played}',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          )),
-          DataCell(Text(
-            '${teamStanding.goalsDiff}',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          )),
-          DataCell(Text(
-            '${teamStanding.points}',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          )),
+          DataCell(Text('${teamStanding.rank}',
+              style: TextStyle(fontWeight: FontWeight.bold))),
+          DataCell(Row(children: [
+            Image.network(teamStanding.team.logo, width: 40, height: 40),
+            SizedBox(width: 10),
+            Text(teamStanding.team.name,
+                style: TextStyle(fontWeight: FontWeight.bold)),
+          ])),
+          DataCell(Text('${teamStanding.all.played}',
+              style: TextStyle(fontWeight: FontWeight.bold))),
+          DataCell(Text('${teamStanding.all.win}',
+              style: TextStyle(fontWeight: FontWeight.bold))), // Wins
+          DataCell(Text('${teamStanding.all.draw}',
+              style: TextStyle(fontWeight: FontWeight.bold))), // Draws
+          DataCell(Text('${teamStanding.all.lose}',
+              style: TextStyle(fontWeight: FontWeight.bold))), // Losses
+          DataCell(Text('${teamStanding.goalsDiff}',
+              style:
+                  TextStyle(fontWeight: FontWeight.bold))), // Goal Difference
+          DataCell(Text('${teamStanding.points}',
+              style: TextStyle(fontWeight: FontWeight.bold))),
         ],
       );
     }).toList();
