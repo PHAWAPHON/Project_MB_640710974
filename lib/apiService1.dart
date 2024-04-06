@@ -3,12 +3,12 @@ import 'package:football/model/fixture.dart';
 import 'package:football/model/standing.dart';
 import 'package:football/model/stats.dart';
 import 'package:football/model/player.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 class FootballApiService {
   final Dio _dio = Dio();
   final headers = {
     'x-rapidapi-host': "v3.football.api-sports.io",
-    'x-rapidapi-key': dotenv.env['API_KEY'],
+    'x-rapidapi-key': "API_KEY",
   };
   Future<List<Fixture>> getFixtures(int leagueNumber) async {
     final response = await _dio.get(
