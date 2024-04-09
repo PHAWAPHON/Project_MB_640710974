@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:football/apiService1.dart';
 import 'package:football/model/standing.dart';
 import '../tabbar/customtabbar.dart';
@@ -111,10 +110,10 @@ class _StandingsTableState extends State<StandingsTable> {
       DataColumn(label: Text('#')),
       DataColumn(label: Text('TEAM')),
       DataColumn(label: Text('P'), numeric: true),
-      DataColumn(label: Text('W'), numeric: true), // Wins
-      DataColumn(label: Text('D'), numeric: true), // Draws
-      DataColumn(label: Text('L'), numeric: true), // Losses
-      DataColumn(label: Text('GD'), numeric: true), // Goal Difference
+      DataColumn(label: Text('W'), numeric: true), 
+      DataColumn(label: Text('D'), numeric: true),
+      DataColumn(label: Text('L'), numeric: true), 
+      DataColumn(label: Text('GD'), numeric: true), 
       DataColumn(label: Text('PTS'), numeric: true),
     ];
   }
@@ -134,14 +133,14 @@ class _StandingsTableState extends State<StandingsTable> {
           DataCell(Text('${teamStanding.all.played}',
               style: TextStyle(fontWeight: FontWeight.bold))),
           DataCell(Text('${teamStanding.all.win}',
-              style: TextStyle(fontWeight: FontWeight.bold))), // Wins
+              style: TextStyle(fontWeight: FontWeight.bold))), 
           DataCell(Text('${teamStanding.all.draw}',
-              style: TextStyle(fontWeight: FontWeight.bold))), // Draws
+              style: TextStyle(fontWeight: FontWeight.bold))),
           DataCell(Text('${teamStanding.all.lose}',
-              style: TextStyle(fontWeight: FontWeight.bold))), // Losses
+              style: TextStyle(fontWeight: FontWeight.bold))), 
           DataCell(Text('${teamStanding.goalsDiff}',
               style:
-                  TextStyle(fontWeight: FontWeight.bold))), // Goal Difference
+                  TextStyle(fontWeight: FontWeight.bold))), 
           DataCell(Text('${teamStanding.points}',
               style: TextStyle(fontWeight: FontWeight.bold))),
         ],

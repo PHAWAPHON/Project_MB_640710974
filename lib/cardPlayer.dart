@@ -21,7 +21,7 @@ class _PlayersState extends State<Players> {
   final List<int> leagueNumbers = [39, 140, 78, 135, 61];
   String currentTop = "topscorers";
   int _bottomIndex = 0;
-  @override
+ 
   @override
   void initState() {
     super.initState();
@@ -77,7 +77,7 @@ class _PlayersState extends State<Players> {
                     borderRadius: BorderRadius.circular(20),
                     border: _selectedIndex == topScorer
                         ? Border.all(
-                            color: Theme.of(context).primaryColor, width: 3)
+                            color: Theme.of(context).primaryColor, width: 4.5)
                         : Border.all(color: Colors.transparent),
                     boxShadow: [
                       BoxShadow(
@@ -167,19 +167,15 @@ class _PlayersState extends State<Players> {
     showModalBottomSheet(
       context: context,
       backgroundColor:
-          Colors.transparent, // Ensure no extra background is applied
+          Colors.transparent, 
       builder: (BuildContext context) {
         return Container(
           padding: EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: Color.fromRGBO(37, 34, 34, 1.0),
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(25),
-              topRight: Radius.circular(25),
-            ),
+            borderRadius: BorderRadius.circular(25),
           ),
           child: SingleChildScrollView(
-            // Use SingleChildScrollView for a long content
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -273,7 +269,6 @@ class _PlayersState extends State<Players> {
           ),
         ],
       ),
-      // Inside your Scaffold
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
         unselectedItemColor: Colors.purple,

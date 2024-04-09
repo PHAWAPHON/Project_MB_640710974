@@ -1,9 +1,9 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:football/model/fixture.dart';
 import 'package:football/apiService1.dart';
 import '../tabbar/customtabbar.dart';
+
 import '../model/stats.dart';
 
 class FixturesTable extends StatefulWidget {
@@ -259,7 +259,7 @@ void _showStatsDialog(BuildContext context, Fixture fixture) {
                 ),
                 SizedBox(height: 16.0),
                 TextButton(
-                  child: Text('Close', style: TextStyle(color: Colors.white)), // Set button text color to white
+                  child: Text('Close', style: TextStyle(color: Colors.white)), 
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
@@ -268,7 +268,7 @@ void _showStatsDialog(BuildContext context, Fixture fixture) {
             ),
           ),
         ),
-        scrollable: false,
+        scrollable: true,
       );
     },
   );
@@ -283,7 +283,7 @@ Widget _buildStatsComparisonView(
 
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.white), // Set border color to white
+        border: Border.all(color: Colors.white), 
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -329,7 +329,7 @@ Widget _buildStatsComparisonView(
       children: [
         Container(
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.white), // Set border color to white
+            border: Border.all(color: Colors.white), 
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
